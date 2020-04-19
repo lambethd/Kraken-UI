@@ -1,0 +1,46 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort>
+    <!--icon-->
+    <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef>Icon</th>
+        <th mat-cell *matCellDef="let element"><img [src]="element.iconLink"/></th>
+    </ng-container>
+    <!--id-->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-cell *matCellDef="let element">{{element.id}}</th>
+    </ng-container>
+    <!--name-->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-cell *matCellDef="let element">{{element.name}}</th>
+    </ng-container>
+    <!--type-->
+    <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+        <th mat-cell *matCellDef="let element">{{element.type}}</th>
+    </ng-container>
+    <!--current-->
+    <ng-container matColumnDef="current">
+        <th mat-header-cell *matHeaderCellDef>Current</th>
+        <th mat-cell *matCellDef="let element">{{element.current.price}}</th>
+    </ng-container>
+    <!--movement-->
+    <ng-container matColumnDef="movement">
+        <th mat-header-cell *matHeaderCellDef>Today's Movement</th>
+        <th mat-cell *matCellDef="let element">{{element.today.price}} <img *ngIf="element.today.trend == 'Positive'" src="assets/up.png" style="width:15px;height:15px;vertical-align: middle;"/><img *ngIf="element.today.trend == 'Negative'" src="assets/down.png" style="width:15px;height:15px;vertical-align: middle;"/></th>
+    </ng-container>
+    <!--members-->
+    <ng-container matColumnDef="members">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Members?</th>
+        <th mat-cell *matCellDef="let element">{{element.members}}</th>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
