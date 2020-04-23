@@ -11,8 +11,13 @@ export class ApiService {
   public getItems(){
     return this.httpClient.get<Item[]>('http://localhost:8080/item');
   }
+
+  public getGraph(id:number){
+    return this.httpClient.get<Graph>('http://localhost:8080/graph/' + id);
+  }
 }
 
+//#region Item
 export interface Item {
   id: number;
   name: string;
@@ -28,3 +33,16 @@ export interface ItemMovement{
   trend: string;
   price: number;
 }
+//#endregion
+
+//#region Graph
+export interface Graph {
+  id: number,
+  daily: GraphPoint [],
+  average: GraphPoint [],
+}
+export interface GraphPoint{
+  key: string,
+  value: number
+}
+////#endregion

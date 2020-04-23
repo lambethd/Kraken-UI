@@ -1,0 +1,14 @@
+a {
+    cursor: pointer;
+    color: #1976d2;
+    text-decoration: none;
+  }
+.spacer {
+    flex: 1;
+}
+.tab {
+    margin-left: 2.5em
+}
+.toolbar-button{
+    cursor: pointer;
+}

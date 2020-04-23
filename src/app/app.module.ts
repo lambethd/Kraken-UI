@@ -8,11 +8,15 @@ import { ItemComponent } from './item/item.component';
 import {DemoMaterialModule} from './material-modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { PriceGraphComponent } from './price-graph/price-graph.component';
+import { TopbannerComponent } from './topbanner/topbanner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemComponent
+    ItemComponent,
+    PriceGraphComponent,
+    TopbannerComponent
   ],
   imports: [
     BrowserModule,

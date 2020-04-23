@@ -13,4 +13,10 @@ describe('ApiService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should get graph data', () =>{
+    service.getGraph(39935).subscribe((data)=>{
+      expect(data).toBeNull;
+    })
+  })
 });

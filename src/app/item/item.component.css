@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    text-align:left;
   }
   
   .mat-form-field {
@@ -7,3 +8,6 @@ table {
     width: 100%;
   }
   
+  .selectionWidthClass{
+    width:50px;
+  }
