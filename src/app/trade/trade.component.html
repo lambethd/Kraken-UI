@@ -1,0 +1,55 @@
+<mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let cellId of [0,1,2,3,4,5]" (click)="updateTradeDialog(cellId)">
+        <div *ngIf="!trades[cellId]">
+            <button mat-fab (click)="createTradeDialog(cellId, 'Buy')">
+                <mat-icon>arrow_downward</mat-icon>Buy
+            </button>
+            <button mat-fab (click)="createTradeDialog(cellId, 'Sell')" class="ml-4">
+                <mat-icon>arrow_upward</mat-icon>Sell
+            </button>
+        </div>
+        <div *ngIf="trades[cellId]">
+            <table>
+                <td>
+                    <img src="{{trades[cellId].icon}}" width="50px" />
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <h2>{{trades[cellId].buySell}}</h2>
+                        </tr>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{{trades[cellId].itemName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Requested:</td>
+                            <td>{{trades[cellId].requestQuantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Price:</td>
+                            <td>{{trades[cellId].requestPrice | number}}gp</td>
+                        </tr>
+                        <tr>
+                            <td>Total:</td>
+                            <td>{{trades[cellId].requestPrice * trades[cellId].requestQuantity | number}}gp</td>
+                        </tr>
+                    </table>
+                </td>
+            </table>
+            <table class="mt-5" width="100%">
+                <tr>
+                    <td>Current Status:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-progress-bar mode="determinate" [value]="trades[cellId].currentPercentage" width="100%"></mat-progress-bar>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:smaller;">{{trades[cellId].currentQuantity}}/{{trades[cellId].requestQuantity}} ({{trades[cellId].currentQuantity/trades[cellId].requestQuantity * 100 | number:'1.2-2'}}%)</td>
+                </tr>
+            </table>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

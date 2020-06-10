@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {SelectionModel, DataSource} from '@angular/cdk/collections';
-import {ApiService, Item, Graph} from '../api.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { SelectionModel, DataSource } from '@angular/cdk/collections';
+import { ApiService } from '../_services/api.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import * as CanvasJS from '../../assets/canvasjs.min';
+import { Item } from '@/_models/item';
+import { ItemService } from '@/_services/item.service';
 
 
 @Component({
@@ -17,34 +19,58 @@ export class ItemComponent implements OnInit {
   selection: SelectionModel<Item>;
   displayedColumns: string[] = ['select', 'icon', 'name', 'type', 'current', 'movement', 'members', 'id'];
 
-  chart: any;
+  chart: CanvasJS.Chart;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private itemService: ItemService,
+    private apiService: ApiService) { }
 
-  ngOnInit(): void {
-    this.apiService.getItems().subscribe((data)=>{
-      console.log(data);
-      this.dataSource = new MatTableDataSource(data);
-      this.selection = new SelectionModel<Item>(true, []);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+  async ngOnInit(): Promise<void> {
+    this.dataSource = new MatTableDataSource(await this.itemService.getItems());
+    this.selection = new SelectionModel<Item>(true, []);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = function (data, filter: string): boolean {
+      return data.name.toLowerCase().includes(filter)
+    };
 
     this.chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       exportEnabled: true,
+      zoomEnabled: true,
       title: {
         text: "Item price"
       },
-      data: [{type:"spline"}]
+      data: [],
+      axisX: {
+        type: 'time',
+        distribution: 'series',
+        time: {
+          unit: 'day'
+        },
+        valueFormatString: "DD MM YYYY",
+        stripLines: [
+          {
+            value: new Date(2020, 3, 30),
+            color: "red",
+            label: "Arch Release",
+            showOnTop: true
+          }
+        ]
+      },
+      axisY: {
+        suffix: "gp"
+      },
+      toolTip: {
+        shared: true
+      }
     });
     this.chart.render();
   };
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -74,34 +100,34 @@ export class ItemComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  toggleRow(row){
+  toggleRow(row) {
     this.selection.toggle(row);
     this.updateGraph();
   }
 
-  resetGraph(){
-    this.chart.options.data = [{type:"spline"}];
+  resetGraph() {
+    this.chart.options.data = [];
     this.chart.render();
   }
 
-  updateGraph(){
+  updateGraph() {
     this.resetGraph();
-    
-    for(let selectedItem of this.selection.selected){
-      this.apiService.getGraph(selectedItem.id).subscribe((graph)=>{
+    for (let selectedItem of this.selection.selected) {
+      this.apiService.getGraph(selectedItem.id).subscribe((graph) => {
         let dataPoints = [];
-        for(let daily of graph.daily){
-          dataPoints.push({label:daily.key.substr(0, 10), y: daily.value});
-        }
-        dataPoints = dataPoints.sort((g1, g2) => {
-          return g1.label > g2.label ? 1 : g1.label < g2.label ? -1 : 0;
+        let sorted = graph.daily.sort((g1, g2) => {
+          return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
         });
+        for (let daily of sorted) {
+          dataPoints.push({ x: new Date(daily.key), y: daily.value });
+        }
         let data = {
-          type: "spline",
+          type: "line",
           name: selectedItem.name,
           showInLegend: true,
-          dataPoints: dataPoints          
+          dataPoints: dataPoints
         };
+
         this.chart.options.data.push(data);
         this.chart.render();
       });

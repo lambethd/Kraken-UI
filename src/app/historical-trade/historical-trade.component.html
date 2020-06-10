@@ -1,0 +1,50 @@
+<h1>Historical Trades</h1>
+<mat-form-field style="height:10px">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dragon Dagger">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" matSort style="width:100%;">
+    <!--Aborted/Completed-->
+    <ng-container matColumnDef="abortedCompleted">
+        <th mat-header-cell *matHeaderCellDef style="padding-left:0;">Completed</th>
+        <th mat-cell *matCellDef="let element">{{element.tradeStatus}}</th>
+    </ng-container>
+    <!--icon-->
+    <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef>Icon</th>
+        <th mat-cell *matCellDef="let element"><img [src]="element.icon"/></th>
+    </ng-container>
+    <!--name-->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-cell *matCellDef="let element">{{element.itemName}}</th>
+    </ng-container>
+    <!--requestQuantity-->
+    <ng-container matColumnDef="requestQuantity">
+        <th mat-header-cell *matHeaderCellDef>Request Quantity</th>
+        <th mat-cell *matCellDef="let element">{{element.requestQuantity | number}}</th>
+    </ng-container>
+    <!--requestPrice-->
+    <ng-container matColumnDef="requestPrice">
+        <th mat-header-cell *matHeaderCellDef>Request Price</th>
+        <th mat-cell *matCellDef="let element">{{element.requestPrice | number}}</th>
+    </ng-container>
+    <!--finalQuantity-->
+    <ng-container matColumnDef="finalQuantity">
+        <th mat-header-cell *matHeaderCellDef>Final Quantity</th>
+        <th mat-cell *matCellDef="let element">{{element.currentQuantity | number}}</th>
+    </ng-container>
+    <!--finalPrice-->
+    <ng-container matColumnDef="finalPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Final Price</th>
+        <th mat-cell *matCellDef="let element">{{element.currentTotalPrice | number}}</th>
+    </ng-container>
+    <!--lastUpdated-->
+    <ng-container matColumnDef="finishDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Finish Date</th>
+        <th mat-cell *matCellDef="let element">{{element.lastUpdated | date:'dd-MM-yyyy hh:mm:ss'}}</th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

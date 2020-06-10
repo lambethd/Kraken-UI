@@ -3,14 +3,14 @@
 
 <mat-form-field style="height:10px">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dragon Dagger">
 </mat-form-field>
 
 <table mat-table [dataSource]="dataSource" matSort>
     <!--selection-->
     <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef [ngClass]="'selectionWidthClass'">
-            <button mat-raised-button (click)="clearAll()">Clear</button>
+        <th mat-header-cell *matHeaderCellDef [ngClass]="'selectionWidthClass'" style="padding-left:0;">
+            <button mat-button (click)="clearAll()">Clear</button>
         </th>
         <td mat-cell *matCellDef="let row" [ngClass]="'selectionWidthClass'">
           <mat-checkbox (click)="$event.stopPropagation()"
@@ -43,12 +43,12 @@
     <!--current-->
     <ng-container matColumnDef="current">
         <th mat-header-cell *matHeaderCellDef>Current</th>
-        <th mat-cell *matCellDef="let element">{{element.current.price}}</th>
+        <th mat-cell *matCellDef="let element">{{element.current.price | number}}</th>
     </ng-container>
     <!--movement-->
     <ng-container matColumnDef="movement">
         <th mat-header-cell *matHeaderCellDef>Today's Movement</th>
-        <th mat-cell *matCellDef="let element">{{element.today.price}} <img *ngIf="element.today.trend == 'Positive'" src="assets/up.png" style="width:15px;height:15px;vertical-align: middle;"/><img *ngIf="element.today.trend == 'Negative'" src="assets/down.png" style="width:15px;height:15px;vertical-align: middle;"/></th>
+        <th mat-cell *matCellDef="let element">{{element.today.price | number}} <img *ngIf="element.today.trend == 'Positive'" src="../../assets/up.png" style="width:15px;height:15px;vertical-align: middle;"/><img *ngIf="element.today.trend == 'Negative'" src="../../assets/down.png" style="width:15px;height:15px;vertical-align: middle;"/></th>
     </ng-container>
     <!--members-->
     <ng-container matColumnDef="members">

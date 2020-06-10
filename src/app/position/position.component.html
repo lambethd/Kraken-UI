@@ -1,0 +1,30 @@
+<h1>Positions</h1>
+<mat-form-field style="height:10px">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dragon Dagger">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" matSort style="width:100%;">
+    <!--icon-->
+    <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef>Icon</th>
+        <th mat-cell *matCellDef="let element"><img [src]="element.icon"/></th>
+    </ng-container>
+    <!--name-->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-cell *matCellDef="let element">{{element.itemName}}</th>
+    </ng-container>
+    <!--positionSize-->
+    <ng-container matColumnDef="positionSize">
+        <th mat-header-cell *matHeaderCellDef>Position Size</th>
+        <th mat-cell *matCellDef="let element">{{element.quantity * element.currentPrice | number}}</th>
+    </ng-container>
+    <!--quantity-->
+    <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <th mat-cell *matCellDef="let element">{{element.quantity | number}}</th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

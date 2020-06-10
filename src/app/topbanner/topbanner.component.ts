@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@/_services/auth.service';
+import { Router } from '@angular/router';
+
+import { User } from '@/_models/user';
 
 @Component({
   selector: 'app-topbanner',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbannerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router, 
+    private authenticationService : AuthService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+   }
 
   ngOnInit(): void {
+    
   }
 
+  checkLoggedIn(){
+    return this.authenticationService.currentUserValue != null;
+  }
+  
+  logout(){
+    this.authenticationService.logout();
+    this.router.navigate(['/']);
+  }
+  currentUser: User;
 }

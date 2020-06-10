@@ -1,0 +1,41 @@
+<h1>Create Flip<h1>
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div>
+        <mat-form-field appearance="standard">
+            <input matInput
+                   placeholder="Item"
+                   aria-label="Item"
+                   [matAutocomplete]="auto"
+                   formControlName="item">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let item of filteredItems | async" [value]="item.name">
+                <img aria-hidden [src]="item.iconLink" height="25">
+                <span>{{item.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="f.item.errors">Please select an item</mat-error>
+          </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Lower Bound</mat-label>
+            <input matInput formControlName="lowerBound" type="number" placeholder="Lower Bound">
+            <mat-error *ngIf="f.lowerBound.errors">Lower Bound is required</mat-error>
+            <span matSuffix>gp</span>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Upper Bound</mat-label>
+            <input matInput formControlName="upperBound" type="number" placeholder="Upper Bound">
+            <mat-error *ngIf="f.upperBound.errors">Upper Bound is required</mat-error>
+            <span matSuffix>gp</span>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Book
+        </button>
+    </div>
+</form>

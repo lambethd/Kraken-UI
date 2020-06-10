@@ -1,0 +1,46 @@
+<h1>Flipping</h1>
+<button mat-button (click)="createSpread()">Enter Flip</button>
+<mat-form-field style="height:10px">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dragon Dagger">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" matSort style="width:100%;">
+    <!--icon-->
+    <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef>Icon</th>
+        <th mat-cell *matCellDef="let element"><img [src]="element.icon" /></th>
+    </ng-container>
+    <!--name-->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-cell *matCellDef="let element">{{element.itemName}}</th>
+    </ng-container>
+    <!--lowerBound-->
+    <ng-container matColumnDef="lowerBound">
+        <th mat-header-cell *matHeaderCellDef>Lower</th>
+        <th mat-cell *matCellDef="let element">{{element.lowerBound | number}}</th>
+    </ng-container>
+    <!--upperBound-->
+    <ng-container matColumnDef="upperBound">
+        <th mat-header-cell *matHeaderCellDef>Upper</th>
+        <th mat-cell *matCellDef="let element">{{element.upperBound | number}}</th>
+    </ng-container>
+    <!--spreadSize-->
+    <ng-container matColumnDef="spreadSize">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Spread</th>
+        <th mat-cell *matCellDef="let element">{{element.spreadSize | number}}</th>
+    </ng-container>
+    <!--roi-->
+    <ng-container matColumnDef="roi">
+        <th mat-header-cell *matHeaderCellDef>ROI</th>
+        <th mat-cell *matCellDef="let element">{{element.roi | number}}</th>
+    </ng-container>
+    <!--enteredDate-->
+    <ng-container matColumnDef="enteredDate">
+        <th mat-header-cell *matHeaderCellDef>Entered Date</th>
+        <th mat-cell *matCellDef="let element">{{element.lastUpdated | date}}</th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

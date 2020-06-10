@@ -1,0 +1,51 @@
+<h1>Update Trade ({{trade.buySell}})</h1>
+<form [formGroup]="updateForm">
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Item</mat-label>
+            <input matInput formControlName="item" type="text">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Requested Quantity</mat-label>
+            <input matInput formControlName="quantity" type="number">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Requested Price</mat-label>
+            <input matInput formControlName="price" type="number">
+            <span matSuffix>gp</span>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Current Quantity</mat-label>
+            <input matInput formControlName="currentQuantity" type="number" placeholder="Current Quantity">
+            <mat-error *ngIf="f.currentQuantity.errors">New quantity must be {{trade.currentQuantity}} < x <= {{trade.requestQuantity}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="standard">
+            <mat-label>Current Total </mat-label>
+            <input matInput formControlName="total" type="number" placeholder="Current Total">
+            <mat-error *ngIf="f.total.errors">Total must be {{trade.currentTotalPrice}} < x</mat-error>
+            <span matSuffix>gp</span>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading || !updateForm.valid" class="btn btn-primary" (click)="updateTrade()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Update
+        </button>
+        <button [disabled]="loading || !updateForm.valid" class="btn btn-primary ml-2" (click)="completeTrade()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Complete
+        </button>
+        <button [disabled]="loading || !updateForm.valid" class="btn btn-primary ml-2" (click)="abortTrade()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Abort
+        </button>
+    </div>
+</form>
