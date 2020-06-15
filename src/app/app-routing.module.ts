@@ -12,6 +12,7 @@ import { HistoricalTradeComponent } from './historical-trade/historical-trade.co
 import { PositionComponent } from './position/position.component';
 import { SpreadComponent } from './spread/spread.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
+import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'position', component: PositionComponent },
   { path: 'spread', component: SpreadComponent },
   { path: 'news', component: NewsFeedComponent },
+  { path: 'twitter', component: TwitterFeedComponent },
 ];
 
 @NgModule({

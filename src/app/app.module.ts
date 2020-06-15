@@ -30,6 +30,7 @@ import { PositionComponent } from './position/position.component';
 import { SpreadComponent } from './spread/spread.component';
 import { CreateSpreadComponent } from './create-spread/create-spread.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
+import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NewsFeedComponent } from './news-feed/news-feed.component';
     PositionComponent,
     SpreadComponent,
     CreateSpreadComponent,
-    NewsFeedComponent
+    NewsFeedComponent,
+    TwitterFeedComponent
   ],
   imports: [
     BrowserModule,
