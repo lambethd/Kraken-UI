@@ -4,7 +4,7 @@ export interface IAppConfig {
 }
 
 export class AppConfig {    
-    public static rsEndpoint = "http://localhost:8080";
-    public static loginEndpoint = "http://localhost:8080";
+    public static rsEndpoint = "https://krakenscove.co.uk:8443";
+    public static loginEndpoint = "https://krakenscove.co.uk:8443";
     public static newsRssEndpoint = "https://secure.runescape.com/m=news/latest_news.rss";
 };
