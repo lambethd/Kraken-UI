@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  rsEndpoint: "http://localhost:8080",
+  loginEndpoint: "http://localhost:8080",
+  newsRssEndpoint: "https://secure.runescape.com/m=news/latest_news.rss"
 };
 
 /*

@@ -1,10 +1,12 @@
+import { environment } from 'environments/environment';
+
 export interface IAppConfig {
     apiEndpoint: string;
     rsEndpoint: string;
 }
 
-export class AppConfig {    
-    public static rsEndpoint = "https://krakenscove.co.uk:8443";
-    public static loginEndpoint = "https://krakenscove.co.uk:8443";
-    public static newsRssEndpoint = "https://secure.runescape.com/m=news/latest_news.rss";
+export class AppConfig {
+    public static rsEndpoint = environment.rsEndpoint;
+    public static loginEndpoint = environment.loginEndpoint;
+    public static newsRssEndpoint = environment.newsRssEndpoint;
 };
