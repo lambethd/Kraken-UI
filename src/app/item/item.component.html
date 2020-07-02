@@ -1,3 +1,10 @@
+<mat-button-toggle-group name="dateRangeGroup" (change)="doToggleChange($event)">
+    <mat-button-toggle value="week">Week</mat-button-toggle>
+    <mat-button-toggle value="month">Month</mat-button-toggle>
+    <mat-button-toggle value="quarter">Quarter</mat-button-toggle>
+    <mat-button-toggle value="year">Year</mat-button-toggle>
+    <mat-button-toggle value="ever">All-time</mat-button-toggle>
+</mat-button-toggle-group>
 <div id="chartContainer" style="width:100%; height:400px;"></div>
 
 
@@ -13,17 +20,14 @@
             <button mat-button (click)="clearAll()">Clear</button>
         </th>
         <td mat-cell *matCellDef="let row" [ngClass]="'selectionWidthClass'">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? toggleRow(row) : null"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? toggleRow(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
         </td>
     </ng-container>
     <!--icon-->
     <ng-container matColumnDef="icon">
         <th mat-header-cell *matHeaderCellDef>Icon</th>
-        <th mat-cell *matCellDef="let element"><img [src]="element.iconLink"/></th>
+        <th mat-cell *matCellDef="let element"><img [src]="element.iconLink" /></th>
     </ng-container>
     <!--id-->
     <ng-container matColumnDef="id">
@@ -48,7 +52,7 @@
     <!--movement-->
     <ng-container matColumnDef="movement">
         <th mat-header-cell *matHeaderCellDef>Today's Movement</th>
-        <th mat-cell *matCellDef="let element">{{element.today.price | number}} <img *ngIf="element.today.trend == 'Positive'" src="../../assets/up.png" style="width:15px;height:15px;vertical-align: middle;"/><img *ngIf="element.today.trend == 'Negative'" src="../../assets/down.png" style="width:15px;height:15px;vertical-align: middle;"/></th>
+        <th mat-cell *matCellDef="let element">{{element.today.price | number}} <img *ngIf="element.today.trend == 'Positive'" src="../../assets/up.png" style="width:15px;height:15px;vertical-align: middle;" /><img *ngIf="element.today.trend == 'Negative'" src="../../assets/down.png" style="width:15px;height:15px;vertical-align: middle;" /></th>
     </ng-container>
     <!--members-->
     <ng-container matColumnDef="members">

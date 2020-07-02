@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as CanvasJS from '../../assets/canvasjs.min';
 import { Item } from '@/_models/item';
 import { ItemService } from '@/_services/item.service';
-
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-item',
@@ -18,6 +18,7 @@ export class ItemComponent implements OnInit {
   dataSource: MatTableDataSource<Item>;
   selection: SelectionModel<Item>;
   displayedColumns: string[] = ['select', 'icon', 'name', 'type', 'current', 'movement', 'members', 'id'];
+  toggleValue = "";
 
   chart: CanvasJS.Chart;
 
@@ -51,6 +52,7 @@ export class ItemComponent implements OnInit {
           unit: 'day'
         },
         valueFormatString: "DD MM YYYY",
+        viewportMinimum: new Date(2019, 1, 1),
         stripLines: [
           {
             value: new Date(2020, 3, 30),
@@ -90,6 +92,13 @@ export class ItemComponent implements OnInit {
   clearAll() {
     this.selection.clear();
     this.updateGraph();
+  }
+
+  /** Toggles Week/Month/Year/Quarter/All-Time */
+  doToggleChange({ value }: MatButtonToggleChange) {
+    var min = new Date();
+    min.setDate(min.getDate() - 1);
+    this.chart.axisX.viewportMinimum = min;
   }
 
   /** The label for the checkbox on the passed row */
