@@ -16,7 +16,7 @@ import { ItemPosition } from '@/_models/position';
 export class PositionComponent implements OnInit {
   dataSource: MatTableDataSource<ItemPosition>;
   selection: SelectionModel<ItemPosition>;
-  displayedColumns: string[] = ['icon', 'name', 'positionSize', 'quantity'];
+  displayedColumns: string[] = ['icon', 'name', 'quantity', 'paidPositionValue', 'currentPositionValue', 'profit', 'paidPricePer', 'currentPricePer', 'profitPer'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

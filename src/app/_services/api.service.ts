@@ -7,6 +7,9 @@ import { AppConfig } from '@/app.config';
 import { ItemPosition } from '@/_models/position';
 import { Trade } from '@/_models/trade';
 import { Spread } from '@/_models/spread';
+import { EventDto } from '@/_models/event';
+import { GraphService } from './graph.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +27,14 @@ export class ApiService {
   //#endregion
 
   //#region Graph
-  public getGraph(id: number) {
-    return this.httpClient.get<Graph>(AppConfig.rsEndpoint + '/graph/' + id);
+  public getGraph(id: number, range: string) {
+    return this.httpClient.get<Graph>(AppConfig.rsEndpoint + '/graph/' + id + '/' + range);
+  }
+  public getGraphs(ids: number[], range: string) : Graph[]{
+    var graphs = [];
+    ids.forEach(i=>this.httpClient.get<Graph>(AppConfig.rsEndpoint + '/graph/' + i + '/' + range));
+    this.httpClient.get<Graph>(AppConfig.rsEndpoint + '/graph/' + id + '/' + range);
+    return Observable.of(graphs);
   }
   //#endregion
 
@@ -59,6 +68,12 @@ export class ApiService {
   }
   public createSpread(spread: Spread){
     return this.httpClient.post<Spread>(AppConfig.rsEndpoint + "/spread", spread);
+  }
+  //#endregion
+
+  //#region Event
+  public getEvents(range: string){
+    return this.httpClient.get<EventDto[]>(AppConfig.rsEndpoint + "/event/" + range);
   }
   //#endregion
 }

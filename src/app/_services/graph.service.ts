@@ -10,11 +10,11 @@ export class GraphService {
   constructor(private apiService: ApiService) { }
 
   graph: Graph;
-  public getGraph(id: number) {
-    if (this.graph) {
+  public getGraph(id: number, range: string) {
+    if (this.graph.id == id) {
       return this.graph;
     }
-    this.apiService.getGraph(id).subscribe((data) => {
+    this.apiService.getGraph(id, range).subscribe((data) => {
       this.graph = data;
       return this.graph;
     });

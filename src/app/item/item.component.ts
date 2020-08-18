@@ -8,6 +8,10 @@ import * as CanvasJS from '../../assets/canvasjs.min';
 import { Item } from '@/_models/item';
 import { ItemService } from '@/_services/item.service';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { EventService } from '@/_services/event.service';
+import { Observable, forkJoin } from 'rxjs';
+import { Graph } from '@/_models/graph';
+import { EventDto } from '@/_models/event';
 
 @Component({
   selector: 'app-item',
@@ -18,15 +22,17 @@ export class ItemComponent implements OnInit {
   dataSource: MatTableDataSource<Item>;
   selection: SelectionModel<Item>;
   displayedColumns: string[] = ['select', 'icon', 'name', 'type', 'current', 'movement', 'members', 'id'];
-  toggleValue = "";
+  toggleValue = "WEEK";
 
   chart: CanvasJS.Chart;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private itemService: ItemService,
-    private apiService: ApiService) { }
+  constructor(
+    private itemService: ItemService,
+    private apiService: ApiService,
+    private eventService: EventService) { }
 
   async ngOnInit(): Promise<void> {
     this.dataSource = new MatTableDataSource(await this.itemService.getItems());
@@ -52,15 +58,7 @@ export class ItemComponent implements OnInit {
           unit: 'day'
         },
         valueFormatString: "DD MM YYYY",
-        viewportMinimum: new Date(2019, 1, 1),
-        stripLines: [
-          {
-            value: new Date(2020, 3, 30),
-            color: "red",
-            label: "Arch Release",
-            showOnTop: true
-          }
-        ]
+        stripLines: []
       },
       axisY: {
         suffix: "gp"
@@ -91,14 +89,13 @@ export class ItemComponent implements OnInit {
   /** Clears collection */
   clearAll() {
     this.selection.clear();
-    this.updateGraph();
+    this.buildChart();
   }
 
   /** Toggles Week/Month/Year/Quarter/All-Time */
   doToggleChange({ value }: MatButtonToggleChange) {
-    var min = new Date();
-    min.setDate(min.getDate() - 1);
-    this.chart.axisX.viewportMinimum = min;
+    this.toggleValue = value;
+    this.buildChart();
   }
 
   /** The label for the checkbox on the passed row */
@@ -109,9 +106,9 @@ export class ItemComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  toggleRow(row) {
+  toggleRow(row: Item) {
     this.selection.toggle(row);
-    this.updateGraph();
+    this.buildChart();
   }
 
   resetGraph() {
@@ -119,27 +116,87 @@ export class ItemComponent implements OnInit {
     this.chart.render();
   }
 
-  updateGraph() {
-    this.resetGraph();
-    for (let selectedItem of this.selection.selected) {
-      this.apiService.getGraph(selectedItem.id).subscribe((graph) => {
-        let dataPoints = [];
-        let sorted = graph.daily.sort((g1, g2) => {
-          return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
-        });
-        for (let daily of sorted) {
-          dataPoints.push({ x: new Date(daily.key), y: daily.value });
-        }
-        let data = {
-          type: "line",
-          name: selectedItem.name,
-          showInLegend: true,
-          dataPoints: dataPoints
-        };
+  // updateGraph() {
+  //   this.resetGraph();
+  //   this.apiService.getEvents(this.toggleValue).subscribe((events)=>{
+  //     this.chart.axisX.stripLines = [];
+  //     events.forEach(event=>{
+  //       this.chart.axisX.stripLines.push({ value: event.date, label: event.name });
+  //     });
+  //     this.chart.render();
+  //   });
+  //   for (let selectedItem of this.selection.selected) {
+  //     forkJoin(this.apiService.getGraph(selectedItem.id, this.toggleValue), )
+  //     this.apiService.getGraph(selectedItem.id, this.toggleValue).subscribe((graph) => {
+  //       let dataPoints = [];
+  //       let sorted = graph.daily.sort((g1, g2) => {
+  //         return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
+  //       });
+  //       for (let daily of sorted) {
+  //         dataPoints.push({ x: new Date(daily.key), y: daily.value });
+  //       }
+  //       let data = {
+  //         type: "line",
+  //         name: selectedItem.name,
+  //         showInLegend: true,
+  //         dataPoints: dataPoints
+  //       };
 
-        this.chart.options.data.push(data);
+  //       this.chart.options.data.push(data);
+  //       this.chart.render();
+  //     });
+  //   };
+  // }
+
+  buildChart() {
+    forkJoin(
+      this.apiService.getGraphs(this.selection.selected.map(i => i.id), this.toggleValue),
+      this.apiService.getEvents(this.toggleValue)
+    )
+      .subscribe(data => {
+        var chartData = [];
+        for (let graph of data[0]) {
+          let dataPoints = [];
+          let sorted = graph.daily.sort((g1, g2) => {
+            return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
+          });
+          for (let daily of sorted) {
+            dataPoints.push({ x: new Date(daily.key), y: daily.value });
+          }
+          let lineData = {
+            type: "line",
+            name: this.selection.selected.filter(s => s.id == graph.id).pop.name,
+            showInLegend: true,
+            dataPoints: dataPoints
+          };
+          chartData.push(lineData);
+        }
+        this.chart = new CanvasJS.Chart("chartContainer", {
+          animationEnabled: true,
+          exportEnabled: true,
+          zoomEnabled: true,
+          title: {
+            text: "Item price"
+          },
+          data: chartData,
+          axisX: {
+            type: 'time',
+            distribution: 'series',
+            time: {
+              unit: 'day'
+            },
+            valueFormatString: "DD MM YYYY",
+            stripLines: []
+          },
+          axisY: {
+            suffix: "gp"
+          },
+          toolTip: {
+            shared: true
+          }
+        });
+        data[1].forEach(e => this.chart.axisX[0].stripLines.push({ value: e.date, label: e.name }));
         this.chart.render();
       });
-    };
-  }
+  };
 }

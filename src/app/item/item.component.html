@@ -1,9 +1,9 @@
-<mat-button-toggle-group name="dateRangeGroup" (change)="doToggleChange($event)">
-    <mat-button-toggle value="week">Week</mat-button-toggle>
-    <mat-button-toggle value="month">Month</mat-button-toggle>
-    <mat-button-toggle value="quarter">Quarter</mat-button-toggle>
-    <mat-button-toggle value="year">Year</mat-button-toggle>
-    <mat-button-toggle value="ever">All-time</mat-button-toggle>
+<mat-button-toggle-group name="dateRangeGroup" (change)="doToggleChange($event)" value="WEEK">
+    <mat-button-toggle value="WEEK">Week</mat-button-toggle>
+    <mat-button-toggle value="MONTH">Month</mat-button-toggle>
+    <mat-button-toggle value="QUARTER">Quarter</mat-button-toggle>
+    <mat-button-toggle value="YEAR">Year</mat-button-toggle>
+    <mat-button-toggle value="ALL_TIME">All-time</mat-button-toggle>
 </mat-button-toggle-group>
 <div id="chartContainer" style="width:100%; height:400px;"></div>
 
