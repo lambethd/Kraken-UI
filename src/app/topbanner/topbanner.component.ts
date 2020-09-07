@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '@/_services/auth.service';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { User } from '@/_models/user';
   styleUrls: ['./topbanner.component.css']
 })
 export class TopbannerComponent implements OnInit {
+  currentUser: User;
 
   constructor(
     private router: Router, 
@@ -29,5 +30,4 @@ export class TopbannerComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/']);
   }
-  currentUser: User;
 }

@@ -24,8 +24,6 @@ export class ItemComponent implements OnInit {
   displayedColumns: string[] = ['select', 'icon', 'name', 'type', 'current', 'movement', 'members', 'id'];
   toggleValue = "WEEK";
 
-  chart: CanvasJS.Chart;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -42,32 +40,6 @@ export class ItemComponent implements OnInit {
     this.dataSource.filterPredicate = function (data, filter: string): boolean {
       return data.name.toLowerCase().includes(filter)
     };
-
-    this.chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      exportEnabled: true,
-      zoomEnabled: true,
-      title: {
-        text: "Item price"
-      },
-      data: [],
-      axisX: {
-        type: 'time',
-        distribution: 'series',
-        time: {
-          unit: 'day'
-        },
-        valueFormatString: "DD MM YYYY",
-        stripLines: []
-      },
-      axisY: {
-        suffix: "gp"
-      },
-      toolTip: {
-        shared: true
-      }
-    });
-    this.chart.render();
   };
 
   applyFilter(event: Event) {
@@ -88,8 +60,8 @@ export class ItemComponent implements OnInit {
 
   /** Clears collection */
   clearAll() {
+    this.multi = [];
     this.selection.clear();
-    this.buildChart();
   }
 
   /** Toggles Week/Month/Year/Quarter/All-Time */
@@ -111,92 +83,52 @@ export class ItemComponent implements OnInit {
     this.buildChart();
   }
 
-  resetGraph() {
-    this.chart.options.data = [];
-    this.chart.render();
-  }
-
-  // updateGraph() {
-  //   this.resetGraph();
-  //   this.apiService.getEvents(this.toggleValue).subscribe((events)=>{
-  //     this.chart.axisX.stripLines = [];
-  //     events.forEach(event=>{
-  //       this.chart.axisX.stripLines.push({ value: event.date, label: event.name });
-  //     });
-  //     this.chart.render();
-  //   });
-  //   for (let selectedItem of this.selection.selected) {
-  //     forkJoin(this.apiService.getGraph(selectedItem.id, this.toggleValue), )
-  //     this.apiService.getGraph(selectedItem.id, this.toggleValue).subscribe((graph) => {
-  //       let dataPoints = [];
-  //       let sorted = graph.daily.sort((g1, g2) => {
-  //         return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
-  //       });
-  //       for (let daily of sorted) {
-  //         dataPoints.push({ x: new Date(daily.key), y: daily.value });
-  //       }
-  //       let data = {
-  //         type: "line",
-  //         name: selectedItem.name,
-  //         showInLegend: true,
-  //         dataPoints: dataPoints
-  //       };
-
-  //       this.chart.options.data.push(data);
-  //       this.chart.render();
-  //     });
-  //   };
-  // }
-
   buildChart() {
     forkJoin(
       this.apiService.getGraphs(this.selection.selected.map(i => i.id), this.toggleValue),
       this.apiService.getEvents(this.toggleValue)
     )
       .subscribe(data => {
-        var chartData = [];
-        for (let graph of data[0]) {
-          let dataPoints = [];
+        var thing = data[0];
+        this.multi = [];
+        for (let graph of thing) {
+          let multiDataPoints = [];
           let sorted = graph.daily.sort((g1, g2) => {
             return g1.key > g2.key ? 1 : g1.key < g2.key ? -1 : 0;
           });
           for (let daily of sorted) {
-            dataPoints.push({ x: new Date(daily.key), y: daily.value });
+            multiDataPoints.push({name: new Date(daily.key), value: daily.value});
           }
-          let lineData = {
-            type: "line",
-            name: this.selection.selected.filter(s => s.id == graph.id).pop.name,
-            showInLegend: true,
-            dataPoints: dataPoints
+          let multiLineData = {
+            name: this.selection.selected.filter(s=>s.id == graph.id).pop().name,
+            series: multiDataPoints
           };
-          chartData.push(lineData);
+          this.multi.push(multiLineData);
         }
-        this.chart = new CanvasJS.Chart("chartContainer", {
-          animationEnabled: true,
-          exportEnabled: true,
-          zoomEnabled: true,
-          title: {
-            text: "Item price"
-          },
-          data: chartData,
-          axisX: {
-            type: 'time',
-            distribution: 'series',
-            time: {
-              unit: 'day'
-            },
-            valueFormatString: "DD MM YYYY",
-            stripLines: []
-          },
-          axisY: {
-            suffix: "gp"
-          },
-          toolTip: {
-            shared: true
-          }
-        });
-        data[1].forEach(e => this.chart.axisX[0].stripLines.push({ value: e.date, label: e.name }));
-        this.chart.render();
       });
   };
+
+  
+public multi = [];
+
+
+  view: any[] = [1200, 400];
+
+  // options for the chart
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Date';
+  showYAxisLabel = true;
+  yAxisLabel = 'Value';
+  timeline = true;
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  // line, area
+  autoScale = true;
 }

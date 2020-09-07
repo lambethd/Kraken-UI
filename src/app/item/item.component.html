@@ -5,7 +5,23 @@
     <mat-button-toggle value="YEAR">Year</mat-button-toggle>
     <mat-button-toggle value="ALL_TIME">All-time</mat-button-toggle>
 </mat-button-toggle-group>
-<div id="chartContainer" style="width:100%; height:400px;"></div>
+<!-- <div id="chartContainer" style="width:100%; height:400px;"></div> -->
+<ngx-charts-line-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="multi"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [autoScale]="autoScale"
+    [timeline]="timeline"
+    >
+</ngx-charts-line-chart>
 
 
 <mat-form-field style="height:10px">

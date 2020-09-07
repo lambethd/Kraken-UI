@@ -31,6 +31,7 @@ import { SpreadComponent } from './spread/spread.component';
 import { CreateSpreadComponent } from './create-spread/create-spread.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    NgxChartsModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
