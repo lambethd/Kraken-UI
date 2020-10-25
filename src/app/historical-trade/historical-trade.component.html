@@ -14,6 +14,11 @@
         <th mat-header-cell *matHeaderCellDef>Icon</th>
         <th mat-cell *matCellDef="let element"><img [src]="element.icon"/></th>
     </ng-container>
+    <!--buy/sell-->
+    <ng-container matColumnDef="buySell">
+        <th mat-header-cell *matHeaderCellDef>Buy/Sell</th>
+        <th mat-cell *matCellDef="let element">{{element.buySell}}</th>
+    </ng-container>
     <!--name-->
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>

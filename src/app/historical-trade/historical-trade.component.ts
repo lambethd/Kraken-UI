@@ -16,7 +16,7 @@ export class HistoricalTradeComponent implements OnInit {
   trades: Trade[] = [];
   dataSource: MatTableDataSource<Trade>;
   selection: SelectionModel<Trade>;
-  displayedColumns: string[] = ['abortedCompleted', 'icon', 'name', 'requestQuantity', 'requestPrice', 'finalQuantity', 'finalPrice', 'finishDate'];
+  displayedColumns: string[] = ['abortedCompleted', 'icon', 'buySell', 'name', 'requestQuantity', 'requestPrice', 'finalQuantity', 'finalPrice', 'finishDate'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

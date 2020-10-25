@@ -38,7 +38,7 @@ export class ItemComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = function (data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter)
+      return data.name.toLowerCase().includes(filter) || data.type.toLowerCase().includes(filter)
     };
   };
 
