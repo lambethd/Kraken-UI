@@ -31,7 +31,17 @@ import { SpreadComponent } from './spread/spread.component';
 import { CreateSpreadComponent } from './create-spread/create-spread.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts'
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WidgetComponent } from './widget/widget.component';
+import { DashboardTestComponent } from './dashboard-test/dashboard-test.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
+import { IndexesWidgetComponent } from './indexes-widget/indexes-widget.component'
 
 @NgModule({
   declarations: [
@@ -54,7 +64,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts'
     SpreadComponent,
     CreateSpreadComponent,
     NewsFeedComponent,
-    TwitterFeedComponent
+    TwitterFeedComponent,
+    DashboardComponent,
+    WidgetComponent,
+    DashboardTestComponent,
+    IndexesWidgetComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +79,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts'
     HttpClientModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },

@@ -1,0 +1,15 @@
+<div *ngFor="let index of indexes">
+    <div>
+        {{index.name}}
+    </div>
+    <div>
+        <mat-label>Today:</mat-label>
+        <mat-icon>{{index.today.direction}}</mat-icon>
+        <mat-label>{{index.today.value}}%</mat-label>
+    </div>
+    <div>
+        <mat-label>30d Trend:</mat-label>
+        <mat-icon>{{index.trend.direction}}</mat-icon>
+        <mat-label>{{index.trend.value}}%</mat-label>
+    </div>
+</div>
