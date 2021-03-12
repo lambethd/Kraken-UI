@@ -10,4 +10,6 @@ export class Spread {
     username: String;
     updatedBy: String;
     lastUpdated: Date;
+    buyingLimit: number;
+    potentialProfit: number;
 }

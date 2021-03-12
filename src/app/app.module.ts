@@ -33,15 +33,16 @@ import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { TwitterFeedComponent } from './twitter-feed/twitter-feed.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { WidgetComponent } from './widget/widget.component';
-import { DashboardTestComponent } from './dashboard-test/dashboard-test.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
-import { IndexesWidgetComponent } from './indexes-widget/indexes-widget.component'
+import { IndexesWidgetComponent } from './indexes-widget/indexes-widget.component';
+import { DashboardItemComponent } from './dashboard-item/dashboard-item.component';
+import { NumberUnitPipe } from './_pipes/number-unit.pipe';
+import { EditPositionComponent } from './edit-position/edit-position.component'
 
 @NgModule({
   declarations: [
@@ -66,9 +67,10 @@ import { IndexesWidgetComponent } from './indexes-widget/indexes-widget.componen
     NewsFeedComponent,
     TwitterFeedComponent,
     DashboardComponent,
-    WidgetComponent,
-    DashboardTestComponent,
-    IndexesWidgetComponent
+    IndexesWidgetComponent,
+    DashboardItemComponent,
+    NumberUnitPipe,
+    EditPositionComponent
   ],
   imports: [
     BrowserModule,

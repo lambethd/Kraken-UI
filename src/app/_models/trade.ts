@@ -13,4 +13,5 @@ export class Trade {
     itemName: string;
     buySell: string;
     currentPercentage: number;
+    location: number;
 }

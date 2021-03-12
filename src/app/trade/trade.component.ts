@@ -23,7 +23,7 @@ export class TradeComponent implements OnInit {
   trades: Trade[];
 
   getTrades() {
-    this.trades = [];
+    this.trades = [null,null,null,null,null,null,null];
     this.tradeService.getTrades().subscribe((data) => {
       data.forEach(async (trade) => {
         if (!trade.currentQuantity) {
@@ -34,14 +34,14 @@ export class TradeComponent implements OnInit {
         var item = await this.itemService.getItem(trade.itemId);
         trade.icon = item.largeIconLink;
         trade.itemName = item.name;
-        this.trades.push(trade);
+        this.trades[trade.location] = trade;
       })
     });
   }
 
   createTradeDialog(cell: number, buySell: string) {
     let dialogRef = this.dialog.open(BookTradeDialogComponent, {
-      data: buySell,
+      data: {buySell: buySell, cell: cell},
       width: '400px'
     });
 

@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { ItemService } from '@/_services/item.service';
 import { PositionService } from '@/_services/position.service';
 import { ItemPosition } from '@/_models/position';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPositionComponent } from '@/edit-position/edit-position.component';
 
 @Component({
   selector: 'app-position',
@@ -16,11 +18,11 @@ import { ItemPosition } from '@/_models/position';
 export class PositionComponent implements OnInit {
   dataSource: MatTableDataSource<ItemPosition>;
   selection: SelectionModel<ItemPosition>;
-  displayedColumns: string[] = ['icon', 'name', 'quantity', 'paidPositionValue', 'currentPositionValue', 'profit', 'paidPricePer', 'currentPricePer', 'profitPer'];
+  displayedColumns: string[] = ['icon', 'name', 'quantity', 'paidPositionValue', 'currentPositionValue', 'profit', 'paidPricePer', 'currentPricePer', 'profitPer', 'editDelete'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private positionService: PositionService, private itemService: ItemService) { }
+  constructor(private positionService: PositionService, private itemService: ItemService, public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     this.dataSource = new MatTableDataSource(await this.positionService.getPositions());
@@ -39,5 +41,22 @@ export class PositionComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editPosition(position: ItemPosition){
+    let dialogRef = this.dialog.open(EditPositionComponent, {
+    data: position,
+    width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.positionService.getPositions().then(p=>this.dataSource.data = p);
+    });
+  }
+
+  deletePosition(position: ItemPosition){
+    if(confirm("Are you sure you want to completely remove this position?")){
+      this.positionService.deletePosition(position).subscribe(async ()=>this.dataSource.data = await this.positionService.getPositions());
+    };
   }
 }

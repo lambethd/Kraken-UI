@@ -19,7 +19,7 @@ export class SpreadComponent implements OnInit {
   spreads: Spread[] = [];
   dataSource: MatTableDataSource<Spread>;
   selection: SelectionModel<Spread>;
-  displayedColumns: string[] = ['icon', 'name', 'lowerBound', 'upperBound', 'spreadSize', 'roi', 'enteredDate'];
+  displayedColumns: string[] = ['icon', 'name', 'lowerBound', 'upperBound', 'spreadSize', 'roi', 'potentialProfit', 'enteredDate'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -50,6 +50,8 @@ export class SpreadComponent implements OnInit {
         console.log("Got item for " + spread.itemId);
         spread.icon = item.iconLink;
         spread.itemName = item.name;
+        spread.buyingLimit = item.buyingLimit;
+        spread.potentialProfit = (item.buyingLimit - 1) * spread.spreadSize;
 
         this.spreads.push(spread);
         //TODO: change this around so it doesn't keep refreshing

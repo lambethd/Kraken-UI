@@ -9,7 +9,7 @@ import { Index } from '@/_models';
 export class IndexesWidgetComponent implements OnInit {
 
   @Input()
-  indexs: Index[];
+  indexes: Index[];
 
   constructor() { }
 

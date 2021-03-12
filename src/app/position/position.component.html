@@ -17,38 +17,45 @@
     <!--quantity-->
     <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef>Quantity</th>
-        <th mat-cell *matCellDef="let element">{{element.quantity | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.quantity | numberUnit}}</th>
     </ng-container>
     <!--paidPositionValue-->
     <ng-container matColumnDef="paidPositionValue">
         <th mat-header-cell *matHeaderCellDef>Paid Position Value</th>
-        <th mat-cell *matCellDef="let element">{{element.purchasePrice | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.purchasePrice | numberUnit}}</th>
     </ng-container>
     <!--currentPositionValue-->
     <ng-container matColumnDef="currentPositionValue">
         <th mat-header-cell *matHeaderCellDef>Current Position Value</th>
-        <th mat-cell *matCellDef="let element">{{element.quantity * element.currentPrice | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.quantity * element.currentPrice | numberUnit}}</th>
     </ng-container>
     <!--profit-->
     <ng-container matColumnDef="profit">
         <th mat-header-cell *matHeaderCellDef>Profit</th>
-        <th mat-cell *matCellDef="let element" [style.color]="((element.quantity * element.currentPrice ) - element.purchasePrice) > 0 ? 'green' : 'red'">{{ (element.quantity * element.currentPrice ) - element.purchasePrice | number }}</th>
+        <th mat-cell *matCellDef="let element" [style.color]="((element.quantity * element.currentPrice ) - element.purchasePrice) > 0 ? 'green' : 'red'">{{ (element.quantity * element.currentPrice ) - element.purchasePrice | numberUnit }}</th>
     </ng-container>
 
     <!--paidPricePer-->
     <ng-container matColumnDef="paidPricePer">
         <th mat-header-cell *matHeaderCellDef>Paid Price Per</th>
-        <th mat-cell *matCellDef="let element">{{ ((element.purchasePrice) != 0 ? (element.purchasePrice / element.quantity) : 1 ) | number }}</th>
+        <th mat-cell *matCellDef="let element">{{ ((element.purchasePrice) != 0 ? (element.purchasePrice / element.quantity) : 1 ) | numberUnit }}</th>
     </ng-container>
     <!--currentPricePer-->
     <ng-container matColumnDef="currentPricePer">
         <th mat-header-cell *matHeaderCellDef>Current Price Per</th>
-        <th mat-cell *matCellDef="let element">{{ element.currentPrice | number }}</th>
+        <th mat-cell *matCellDef="let element">{{ element.currentPrice | numberUnit }}</th>
     </ng-container>
     <!--profitPer-->
     <ng-container matColumnDef="profitPer">
         <th mat-header-cell *matHeaderCellDef>Profit Per</th>
-        <th mat-cell *matCellDef="let element" [style.color]="(element.currentPrice - ((element.purchasePrice) != 0 ? (element.purchasePrice / element.quantity) : 1 )) > 0 ? 'green' : 'red'">{{ (element.currentPrice - ((element.purchasePrice) != 0 ? (element.quantity / element.purchasePrice) : 1 )) | number }}</th>
+        <th mat-cell *matCellDef="let element" [style.color]="(element.currentPrice - ((element.purchasePrice) != 0 ? (element.purchasePrice / element.quantity) : 1 )) > 0 ? 'green' : 'red'">{{ (element.currentPrice - ((element.purchasePrice) != 0 ? (element.quantity / element.purchasePrice) : 1 )) | numberUnit }}</th>
+    </ng-container>
+    <ng-container matColumnDef="editDelete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-cell *matCellDef="let element">
+            <button mat-button (click)="editPosition(element)">Edit</button>
+            <button mat-button (click)="deletePosition(element)">Delete</button>
+        </th>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -5,4 +5,6 @@ export class ItemPosition {
     itemName: string;
     icon: string;
     currentPrice: number;
+    quantity: number;
+    purchasePrice: number;
 }

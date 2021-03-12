@@ -21,6 +21,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.alertService.error("You have been logged out and will need to log back in");
                 location.reload(true);
             }
+            if(err.status === 500){
+                // alert to say there has been an error
+                this.alertService.error("Something has gone wrong, please try again");
+            }
 
             const error = err.error.message || err.statusText;
             return throwError(error);

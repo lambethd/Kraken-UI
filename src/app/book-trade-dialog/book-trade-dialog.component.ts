@@ -22,16 +22,18 @@ export class BookTradeDialogComponent implements OnInit {
   buySell: string;
   items: Item[];
   filteredItems: Observable<Item[]>;
+  cell: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private tradeService: TradeService,
     private itemService: ItemService,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<BookTradeDialogComponent>
   ) {
-    this.buySell = data;
+    this.buySell = data.buySell;
+    this.cell = data.cell;
   }
 
   async ngOnInit(): Promise<void> {
@@ -80,6 +82,7 @@ export class BookTradeDialogComponent implements OnInit {
     trade.itemId = item.id;
     trade.tradeStatus = "Pending";
     trade.buySell = this.buySell;
+    trade.location = this.cell;
 
     this.tradeService.createTrade(trade).subscribe((data) => {
       this.loading = false;

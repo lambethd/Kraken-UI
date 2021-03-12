@@ -1,6 +1,7 @@
 import { ItemService } from './item.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
+import { ItemPosition } from '@/_models/position';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,13 @@ export class PositionService {
       pos.currentPrice = item.current.price;
     });
     return result;
+  }
+
+  public updatePosition(position: ItemPosition){
+    return this.apiService.updatePosition(position);
+  }
+
+  public deletePosition(position: ItemPosition){
+    return this.apiService.deletePosition(position);
   }
 }

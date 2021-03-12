@@ -10,4 +10,5 @@ export class Item {
     members:boolean;
     current: ItemMovement;
     today: ItemMovement;
+    buyingLimit: number;
   }

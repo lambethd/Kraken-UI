@@ -36,13 +36,14 @@ export class NumberConversionService {
   }
 
   public convertToString(number: number) {
-    var text = "";
+    var text = "" + number;
     if (number / this.billion > 1) {
-      text = (number / this.billion) + "b";
+      text = (number / this.billion).toFixed(2) + "b";
     } else if (number / this.million > 1) {
-      text = (number / this.million) + "m";
+      text = (number / this.million).toFixed(2) + "m";
     } else if (number / this.thousand > 1) {
-      text = (number / this.thousand) + "k";
+      text = (number / this.thousand).toFixed(2) + "k";
     }
+    return text;
   }
 }

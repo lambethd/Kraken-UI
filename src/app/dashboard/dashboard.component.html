@@ -1,14 +1,37 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile>
-        <app-indexes-widget [indexes]="dashboard.indexes"></app-indexes-widget>
-    </mat-grid-tile>
-    <mat-grid-tile>
+<div *ngIf="dashboard">
+    <mat-grid-list cols="2" rowHeight="200px">
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Increases by Daily Value</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topIncreasesByDailyValue"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Increases by Daily Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topIncreasesByDailyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Daily Value</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByDailyValue"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Daily Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByDailyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
 
-    </mat-grid-tile>
-    <mat-grid-tile>
-        
-    </mat-grid-tile>
-    <mat-grid-tile>
-        
-    </mat-grid-tile>
-</mat-grid-list>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Monthly Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByMonthlyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Monthly Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByMonthlyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Monthly Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByMonthlyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-grid-tile-header>Top Decreases by Monthly Percentage</mat-grid-tile-header>
+            <app-dashboard-item [dashboardItems]="dashboard.topDecreasesByMonthlyPercentage"></app-dashboard-item>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

@@ -28,12 +28,16 @@
     <!--spreadSize-->
     <ng-container matColumnDef="spreadSize">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Spread</th>
-        <th mat-cell *matCellDef="let element">{{element.spreadSize | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.spreadSize | numberUnit}}</th>
     </ng-container>
     <!--roi-->
     <ng-container matColumnDef="roi">
         <th mat-header-cell *matHeaderCellDef>ROI</th>
         <th mat-cell *matCellDef="let element">{{element.roi | number}}</th>
+    </ng-container>
+    <ng-container matColumnDef="potentialProfit">
+        <th mat-header-cell *matHeaderCellDef>Potential Profit</th>
+        <th mat-cell *matCellDef="let element">{{element.potentialProfit | numberUnit}}</th>
     </ng-container>
     <!--enteredDate-->
     <ng-container matColumnDef="enteredDate">

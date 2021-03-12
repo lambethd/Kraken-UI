@@ -1,0 +1,49 @@
+<div class="vertical-scroll-container">
+<table *ngIf="dashboardItems">
+    <thead>
+        <td>Item</td>
+        <td>Price</td>
+        <td>Daily Price Change</td>
+        <td>Daily % Change</td>
+        <td>Monthly Price Change</td>
+        <td>Monthly % Change</td>
+        <td></td>
+    </thead>
+    <tr *ngFor="let dashboardItem of dashboardItems">
+        <td><img [src]="dashboardItem.item.iconLink">{{dashboardItem.item.name}}</td>
+        <td>{{dashboardItem.item.current.price | numberUnit}}</td>
+        <td>{{dashboardItem.dailyValueChange | numberUnit}}</td>
+        <td>{{dashboardItem.dailyPercentageChange}}%</td>
+        <td>{{dashboardItem.monthlyValueChange | numberUnit}}</td>
+        <td>{{dashboardItem.monthlyPercentageChange}}%</td>
+    </tr>
+</table>
+    <!-- {{item.name}}
+    {{dashboardItem.dailyValueChange}}
+<mat-grid-list cols=2>
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>{{item.name}}</mat-grid-tile>
+</mat-grid-list> -->
+<!-- <table>
+        <tr>
+            <td><img [src]="item.iconLink" /></td>
+            <td>{{item.name}}</td>
+        </tr>
+        <tr>
+            <td [style.color]="dashboardItem.dailyValueChange > 0 ? 'green' : 'red'">
+                {{dashboardItem.dailyValueChange}}
+            </td>
+            <td [style.color]="dashboardItem.dailyPercentageChange > 0 ? 'green' : 'red'">
+                {{dashboardItem.dailyPercentageChange}}
+            </td>
+        </tr>
+        <tr>
+            <td [style.color]="dashboardItem.monthlyValueChange > 0 ? 'green' : 'red'">
+                {{dashboardItem.monthlyValueChange}}
+            </td>
+            <td [style.color]="dashboardItem.monthlyPercentageChange > 0 ? 'green' : 'red'">
+                {{dashboardItem.monthlyPercentageChange}}
+            </td>
+        </tr>
+        </table> -->
+    </div>

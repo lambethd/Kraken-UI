@@ -13,6 +13,7 @@ import { mergeMap } from 'rxjs/operators';
 import { of, interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
+import { Dashboard } from '@/_models/dashboard';
 
 @Injectable({
   providedIn: 'root'
@@ -41,41 +42,53 @@ export class ApiService {
   //#endregion
 
   //#region Position
-  public getPositions() {
+  public getPositions() :Observable<ItemPosition[]> {
     return this.httpClient.get<ItemPosition[]>(AppConfig.rsEndpoint + '/position');
+  }
+  public updatePosition(position: ItemPosition){
+    return this.httpClient.post(AppConfig.rsEndpoint + "/position", position);
+  }
+  public deletePosition(position: ItemPosition){
+    return this.httpClient.delete(AppConfig.rsEndpoint + "/position/" + position.id);
   }
   //#endregion
 
   //#region Trade
-  public getTrades() {
+  public getTrades() :Observable<Trade[]>{
     return this.httpClient.get<Trade[]>(AppConfig.rsEndpoint + "/trade/current");
   }
-  public createTrade(trade: Trade) {
+  public createTrade(trade: Trade) :Observable<Trade> {
     return this.httpClient.put<Trade>(AppConfig.rsEndpoint + "/trade/current", trade);
   }
-  public updateTrade(trade: Trade) {
+  public updateTrade(trade: Trade){
     return this.httpClient.post(AppConfig.rsEndpoint + "/trade/current", trade);
   }
   //#endregion
 
   //#region Historical Trades
-  public getHistoricalTrades() {
+  public getHistoricalTrades() :Observable<Trade[]> {
     return this.httpClient.get<Trade[]>(AppConfig.rsEndpoint + "/trade/historical");
   }
   //#endregion
 
   //#region Spread
-  public getSpreads() {
+  public getSpreads() : Observable<Spread[]> {
     return this.httpClient.get<Spread[]>(AppConfig.rsEndpoint + "/spread");
   }
-  public createSpread(spread: Spread) {
+  public createSpread(spread: Spread) : Observable<Spread> {
     return this.httpClient.post<Spread>(AppConfig.rsEndpoint + "/spread", spread);
   }
   //#endregion
 
   //#region Event
-  public getEvents(range: string) {
+  public getEvents(range: string) : Observable<EventDto[]> {
     return this.httpClient.get<EventDto[]>(AppConfig.rsEndpoint + "/event/" + range);
+  }
+  //#endregion
+
+  //#region Dashboard
+  public getDashboard() : Observable<Dashboard>{
+    return this.httpClient.get<Dashboard>(AppConfig.rsEndpoint + "/dashboard");
   }
   //#endregion
 }
