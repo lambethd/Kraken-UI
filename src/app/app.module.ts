@@ -42,7 +42,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { IndexesWidgetComponent } from './indexes-widget/indexes-widget.component';
 import { DashboardItemComponent } from './dashboard-item/dashboard-item.component';
 import { NumberUnitPipe } from './_pipes/number-unit.pipe';
-import { EditPositionComponent } from './edit-position/edit-position.component'
+import { EditPositionComponent } from './edit-position/edit-position.component';
+import { JobStatusGraphComponent } from './job-status-graph/job-status-graph.component'
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { EditPositionComponent } from './edit-position/edit-position.component'
     IndexesWidgetComponent,
     DashboardItemComponent,
     NumberUnitPipe,
-    EditPositionComponent
+    EditPositionComponent,
+    JobStatusGraphComponent
   ],
   imports: [
     BrowserModule,
