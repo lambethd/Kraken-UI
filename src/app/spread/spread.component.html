@@ -1,5 +1,7 @@
-<mat-card-title>Flipping</mat-card-title>
-<button mat-button (click)="createSpread()">Enter Flip</button>
+<button mat-raised-button color="accent" (click)="createSpread()">
+    <mat-icon>add</mat-icon>
+    Enter Flip
+</button>
 <mat-form-field style="height:10px">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dragon Dagger">

@@ -8,12 +8,10 @@ import { ItemPosition } from '@/_models/position';
 import { Trade } from '@/_models/trade';
 import { Spread } from '@/_models/spread';
 import { EventDto } from '@/_models/event';
-import { GraphService } from './graph.service';
-import { mergeMap } from 'rxjs/operators';
-import { of, interval } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 import { Dashboard } from '@/_models/dashboard';
+import { Job } from '@/_models/job';
+import { JobDetail } from '@/_models/job-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +87,15 @@ export class ApiService {
   //#region Dashboard
   public getDashboard() : Observable<Dashboard>{
     return this.httpClient.get<Dashboard>(AppConfig.rsEndpoint + "/dashboard");
+  }
+  //#endregion
+
+  //#region Jobs
+  public getJobStatus(date: Date) : Observable<Job[]>{
+    return this.httpClient.get<Job[]>(AppConfig.rsEndpoint + "/job/" + (date.toISOString().slice(0, 10).replace(/-/g, "")));
+  }
+  public getJobDetail() : Observable<JobDetail[]>{
+    return this.httpClient.get<JobDetail[]>(AppConfig.rsEndpoint + "/job/job-details" );
   }
   //#endregion
 }

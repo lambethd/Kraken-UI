@@ -22,7 +22,7 @@
     <div>
         <mat-form-field appearance="standard">
             <mat-label>Current Quantity</mat-label>
-            <input matInput formControlName="currentQuantity" type="number" placeholder="Current Quantity">
+            <input matInput formControlName="currentQuantity" (change)="updateTotal()" type="number" placeholder="Current Quantity">
             <mat-error *ngIf="f.currentQuantity.errors">New quantity must be {{trade.currentQuantity}} < x <= {{trade.requestQuantity}}</mat-error>
         </mat-form-field>
     </div>

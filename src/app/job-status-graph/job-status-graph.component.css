@@ -1,0 +1,8 @@
+g.edge path {
+    stroke: #707070;
+}
+g.edge:hover path {
+    stroke: black;
+    cursor: pointer;
+    stroke-width: 3px;
+}

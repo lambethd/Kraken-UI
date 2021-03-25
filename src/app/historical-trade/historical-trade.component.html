@@ -27,22 +27,22 @@
     <!--requestQuantity-->
     <ng-container matColumnDef="requestQuantity">
         <th mat-header-cell *matHeaderCellDef>Request Quantity</th>
-        <th mat-cell *matCellDef="let element">{{element.requestQuantity | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.requestQuantity | numberUnit}}</th>
     </ng-container>
     <!--requestPrice-->
     <ng-container matColumnDef="requestPrice">
         <th mat-header-cell *matHeaderCellDef>Request Price</th>
-        <th mat-cell *matCellDef="let element">{{element.requestPrice | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.requestPrice | numberUnit}}</th>
     </ng-container>
     <!--finalQuantity-->
     <ng-container matColumnDef="finalQuantity">
         <th mat-header-cell *matHeaderCellDef>Final Quantity</th>
-        <th mat-cell *matCellDef="let element">{{element.currentQuantity | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.currentQuantity | numberUnit}}</th>
     </ng-container>
     <!--finalPrice-->
     <ng-container matColumnDef="finalPrice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Final Price</th>
-        <th mat-cell *matCellDef="let element">{{element.currentTotalPrice | number}}</th>
+        <th mat-cell *matCellDef="let element">{{element.currentTotalPrice | numberUnit}}</th>
     </ng-container>
     <!--lastUpdated-->
     <ng-container matColumnDef="finishDate">

@@ -1,5 +1,5 @@
 <mat-grid-list cols="3" rowHeight="11rem">
-    <mat-grid-tile *ngFor="let cellId of [0,1,2,3,4,5,6]" (click)="updateTradeDialog(cellId)">
+    <mat-grid-tile *ngFor="let cellId of [0,1,2,3,4,5,6,7]" (click)="updateTradeDialog(cellId)">
         <div *ngIf="!trades[cellId]">
             <button mat-fab (click)="createTradeDialog(cellId, 'Buy')">
                 <mat-icon>arrow_downward</mat-icon>Buy
@@ -21,19 +21,19 @@
                         </tr>
                         <tr>
                             <td>Name:</td>
-                            <td>{{trades[cellId].itemName}}</td>
+                            <td style="text-align: right;">{{trades[cellId].itemName}}</td>
                         </tr>
                         <tr>
                             <td>Requested:</td>
-                            <td>{{trades[cellId].requestQuantity}}</td>
+                            <td style="text-align: right;">{{trades[cellId].requestQuantity}}</td>
                         </tr>
                         <tr>
                             <td>Price:</td>
-                            <td>{{trades[cellId].requestPrice | number}}gp</td>
+                            <td style="text-align: right;">{{trades[cellId].requestPrice | number}}gp</td>
                         </tr>
                         <tr>
                             <td>Total:</td>
-                            <td>{{trades[cellId].requestPrice * trades[cellId].requestQuantity | number}}gp</td>
+                            <td style="text-align: right;">{{trades[cellId].requestPrice * trades[cellId].requestQuantity | number}}gp</td>
                         </tr>
                     </table>
                 </td>

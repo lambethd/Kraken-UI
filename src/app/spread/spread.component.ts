@@ -51,7 +51,7 @@ export class SpreadComponent implements OnInit {
         spread.icon = item.iconLink;
         spread.itemName = item.name;
         spread.buyingLimit = item.buyingLimit;
-        spread.potentialProfit = (item.buyingLimit - 1) * spread.spreadSize;
+        spread.potentialProfit = item.buyingLimit ? (item.buyingLimit - 1) * spread.spreadSize : 0;
 
         this.spreads.push(spread);
         //TODO: change this around so it doesn't keep refreshing

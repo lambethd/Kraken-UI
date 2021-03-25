@@ -45,42 +45,38 @@ export class UpdateTradeDialogComponent implements OnInit {
   }
 
   updateTrade() {
-    console.log("Update: " + this.f.currentQuantity.value + ", " + this.f.total.value);
     let trade = this.trade;
     trade.tradeStatus = "Partial";
     trade.currentQuantity = this.f.currentQuantity.value;
     trade.currentTotalPrice = this.f.total.value;
     this.tradeService.updateTrade(trade).subscribe(data => {
-      console.log("Success!");
-      console.log(data);
       this.dialogRef.close();
     });
   }
 
   completeTrade() {
-    console.log("Complete: " + this.f.currentQuantity.value + ", " + this.f.total.value);
     let trade = this.trade;
     trade.tradeStatus = "Complete";
     trade.currentQuantity = trade.requestQuantity;
     trade.currentTotalPrice = this.f.total.value;
     this.tradeService.updateTrade(trade).subscribe(data => {
-      console.log("Success!");
-      console.log(data);
       this.dialogRef.close();
     });
   }
 
   abortTrade() {
-    console.log("Abort: " + this.f.currentQuantity.value + ", " + this.f.total.value);
     let trade = this.trade;
     trade.tradeStatus = "Aborted";
     trade.currentQuantity = this.f.currentQuantity.value;
     trade.currentTotalPrice = this.f.total.value;
     this.tradeService.updateTrade(trade).subscribe(data => {
-      console.log("Success!");
-      console.log(data);
       this.dialogRef.close();
     });
+  }
+
+  updateTotal(){
+    var newPrice = this.trade.currentTotalPrice + ((this.f.currentQuantity.value - this.trade.currentQuantity) * this.trade.requestPrice);
+    this.f.total.setValue(newPrice);
   }
 
   get f() { return this.updateForm.controls; }
